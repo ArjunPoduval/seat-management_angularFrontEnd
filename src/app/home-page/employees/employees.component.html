@@ -1,0 +1,26 @@
+<app-home-page></app-home-page>
+<div class="container">
+    <h2>Employees Management</h2>
+  
+    <form [formGroup]="form">
+      <h3>Onboard an Employee</h3>
+  
+      <label for="employeeName">Employee Name:</label>
+      <input type="text" formControlName="employeeName" required />
+  
+      <label for="departmentId">Department ID:</label>
+      <select formControlName="departmentId" required>
+        <option
+          *ngFor="let department of departmentList"
+          [value]="department?.departmentId"
+        >
+          {{ department?.departmentId }} - {{ department?.departmentName }}
+        </option>
+      </select>
+  
+      <!-- Add more fields for employee management as needed -->
+  
+      <button (click)="createEmployee()">Submit</button>
+    </form>
+  </div>
+  

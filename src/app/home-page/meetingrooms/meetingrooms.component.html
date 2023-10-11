@@ -1,0 +1,62 @@
+<app-home-page></app-home-page>
+<div class="container">
+  <h2>MeetingRoom Management</h2>
+
+  <form [formGroup]="form">
+   <span>
+    <h3 (click)="onboardMeetingroomPage()">Onboard a MeetingRoom</h3> <h3 (click)="updateAssetPage()">Allocate/Deallocate Asset to MeetingRoom</h3>
+   </span> 
+    <div *ngIf="onboard == true">
+      <label for="facilityId">Facility:</label>
+      <select formControlName="facilityId" required>
+        <option
+          *ngFor="let facility of facilityList"
+          [value]="facility?.facilityId"
+        >
+          {{ facility?.facilityId }} - {{ facility?.facilityName }}
+        </option>
+      </select>
+
+      <label for="meetingRoomNumber">MeetingRoom Number:</label>
+      <input type="number" formControlName="meetingRoomNumber" required />
+      <div
+    class="validationError"
+    *ngIf="
+      form.controls['meetingRoomNumber'].hasError('required') && form.controls['meetingRoomNumber'].touched">
+    Only numbers are valid.
+  </div>
+
+      <label for="totalSeats">Total Seats:</label>
+      <input type="number" formControlName="totalSeats" required />
+      <div
+    class="validationError"
+    *ngIf="
+      form.controls['totalSeats'].hasError('required') && form.controls['totalSeats'].touched">
+    Only numbers are valid.
+  </div>
+
+      <button (click)="createMeetingRoom()" [disabled]="!form.valid">Submit</button>
+    </div>
+    
+    <div *ngIf="onboard == false">
+      <label for="indexId">Asset:</label>
+      <select formControlName="assetIndexId" required>
+        <option *ngFor="let asset of assetList" [value]="asset.indexId">
+          Name- {{ asset.asset.assetName }}, Facility-{{ asset.facilityId }}
+        </option>
+      </select>
+      <label for="meetingRoomId">MeetingRoom:</label>
+      <select formControlName="meetingRoomId">
+        <option
+          *ngFor="let meetignRoom of meetingRoomList"
+          [value]="meetignRoom.meetingRoomId"
+        >
+          MeetingRoom Number-{{ meetignRoom.meetingRoomNumber }}, Facility-{{
+            meetignRoom.facilityId
+          }}
+        </option>
+      </select>
+      <button (click)="updateAsset()">Allocate/Deallocate</button>
+    </div>
+  </form>
+</div>

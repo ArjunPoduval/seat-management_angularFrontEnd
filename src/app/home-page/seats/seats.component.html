@@ -1,0 +1,52 @@
+<app-home-page></app-home-page>
+<div class="container">
+  <h2>Seats Management</h2>
+
+  <form [formGroup]="form">
+    <span>
+        <h3 (click)="onboardSeatsPage()">Onboard a Seat</h3>
+        <h3 (click)="updateSeatsPage()">Allocate/Deallocate Seat</h3>
+      </span>
+      <div *ngIf="onboard == true">
+    <label for="facilityId">Facility:</label>
+    <select formControlName="facilityId" required>
+      <option
+        *ngFor="let facility of facilityList"
+        [value]="facility?.facilityId"
+      >
+        {{ facility?.facilityId }} - {{ facility?.facilityName }}
+      </option>
+    </select>
+
+    <label for="seatNumber">Seat Number:</label>
+    <input type="number" formControlName="seatNumber" required />
+    <div
+    class="validationError"
+    *ngIf="
+      form.controls['seatNumber'].hasError('required') && form.controls['seatNumber'].touched">
+    Only numbers are valid.
+  </div>
+    <button (click)="createSeat()" [disabled]="!form.valid">Submit</button>
+    </div>
+    <div *ngIf="onboard == false">
+        <label for="seatId">Seat:</label>
+        <select formControlName="seatId" required>
+          <option *ngFor="let seat of seatList" [value]="seat.seatId">
+            seat Number- {{ seat.seatNumber }}, Facility-{{ seat.facilityId }}
+          </option>
+        </select>
+        <label for="employeeId">Employee:</label>
+        <select formControlName="employeeId">
+          <option
+            *ngFor="let employee of employeeList"
+            [value]="employee.employeeId"
+          >
+            Employee Id-{{ employee.employeeId }}, Name-{{
+              employee.employeeName
+            }}
+          </option>
+        </select>
+        <button (click)="updateSeat()">Allocate/Deallocate</button>
+      </div>
+  </form>
+</div>

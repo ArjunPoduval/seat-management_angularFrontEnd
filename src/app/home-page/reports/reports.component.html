@@ -1,0 +1,72 @@
+<app-home-page></app-home-page>
+<div class="container">
+  <h2>Reports</h2>
+
+  <form [formGroup]="form">
+    <h3>Generate a Report</h3>
+
+    <label for="allocationType">Report Type:</label>
+    <select formControlName="allocationType" required>
+      <option value="1">Allocated Seats Report</option>
+      <option value="2">UnAllocated Seats Report</option>
+    </select>
+    <div
+      class="validationError"
+      *ngIf="
+        form.controls['allocationType'].hasError('required') &&
+        form.controls['allocationType'].touched
+      "
+    >
+      Allocation Type is Required
+    </div>
+    <label for="city">city Name:</label>
+    <select
+      formControlName="cityId"
+      required
+      (change)="onCitySelected(form.get('cityId').value)"
+    >
+      <option *ngFor="let city of cityList" [value]="city?.cityId">
+        {{ city?.cityId }} - {{ city?.cityName }}
+      </option>
+    </select>
+    <label for="building">Building Name:</label>
+    <select
+      formControlName="buildingId"
+      required
+      (change)="onBuildingSelected(form.get('buildingId').value)"
+    >
+      <option
+        *ngFor="let building of buildingList"
+        [value]="building?.buildingId"
+      >
+        {{ building?.buildingId }} - {{ building?.buildingName }}
+      </option>
+    </select>
+    <label for="floorNumber">floor number:</label>
+    <input type="number" formControlName="floorNumber" required />
+    <div
+      class="validationError"
+      *ngIf="form.controls['floorNumber'].hasError('required')"
+    >
+      Only numbers are valid.
+    </div>
+
+    <button (click)="generateReport()" [disabled]="!form.valid">
+      Generate Report
+    </button>
+  </form>
+  <div *ngIf="report.length > 0">
+    <h3>Report Results</h3>
+    <ul>
+      <li *ngFor="let item of report">
+        {{ item.cityAbbreviation }}-{{ item.buildingAbbreviation }}-{{ item.facilityName }}-{{ item.floor }}-S{{ item.seatNumber }}
+        <span *ngIf="item.employeeId != null">
+          -{{ item.employeeName }}-{{ item.employeeId }}
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="report.length == 0 && reportGenerated == true">
+    <h4>Report is empty</h4>
+  </div>
+</div>

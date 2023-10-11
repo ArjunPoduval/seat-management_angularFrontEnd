@@ -1,0 +1,53 @@
+<app-home-page></app-home-page>
+<div class="container">
+  <h2>Cabin Management</h2>
+
+  <form [formGroup]="form">
+    <span>
+      <h3 (click)="onboardCabinPage()">Onboard a Cabin</h3>
+      <h3 (click)="updateCabinPage()">Allocate/Deallocate Cabin</h3>
+    </span>
+    <div *ngIf="onboard == true">
+      <label for="facilityId">Facility:</label>
+      <select formControlName="facilityId" required>
+        <option
+          *ngFor="let facility of facilityList"
+          [value]="facility?.facilityId"
+        >
+          {{ facility?.facilityId }} - {{ facility?.facilityName }}
+        </option>
+      </select>
+
+      <label for="cabinNumber">Cabin Number:</label>
+      <input type="number" formControlName="cabinNumber" required />
+      <div
+      class="validationError"
+      *ngIf="
+        form.controls['cabinNumber'].hasError('required') && form.controls['cabinNumber'].touched">
+      Only numbers are valid.
+    </div>
+
+      <button (click)="createCabin()" [disabled]="!form.valid">Submit</button>
+    </div>
+    <div *ngIf="onboard == false">
+      <label for="cabinId">Cabin:</label>
+      <select formControlName="cabinId" required>
+        <option *ngFor="let cabin of cabinList" [value]="cabin.cabinId">
+          Cabin Number- {{ cabin.cabinNumber }}, Facility-{{ cabin.facilityId }}
+        </option>
+      </select>
+      <label for="employeeId">Employee:</label>
+      <select formControlName="employeeId">
+        <option
+          *ngFor="let employee of employeeList"
+          [value]="employee.employeeId"
+        >
+          Employee Id-{{ employee.employeeId }}, Name-{{
+            employee.employeeName
+          }}
+        </option>
+      </select>
+      <button (click)="updateCabin()">Allocate/Deallocate</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/ng-swagger-gen/ng-swagger-gen-schema.json",
+  "swagger": "http://localhost:5140/swagger/v1/swagger.json",
+  "output": "src/api",
+  "prefix": "seat-management-api",
+  "ignoreUnusedModels": true,
+  "minParamsForContainer": 2,
+  "sortParams": "desc",
+  "defaultTag": "seat-management-api",
+  "removeStaleFiles": false,
+  "modelIndex": true,
+  "serviceIndex": true,
+  "apiModule": true,
+  "enumModule": true,
+  "generateExamples": false,
+  "camelCase": false,
+  "customFileSuffix": {
+    "model": "",
+    "example": ".example",
+    "service": ".service"
+  },
+  "timeout": 20000,
+  "rootUrl": "https://localhost:7004"
+}
